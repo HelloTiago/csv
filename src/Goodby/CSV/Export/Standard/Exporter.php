@@ -51,13 +51,14 @@ class Exporter implements ExporterInterface
      */
     public function export($filename, $rows)
     {
-        $delimiter   = $this->config->getDelimiter();
-        $enclosure   = $this->config->getEnclosure();
-        $enclosure   = empty($enclosure) ? "\0" : $enclosure;
-        $newline     = $this->config->getNewline();
-        $fromCharset = $this->config->getFromCharset();
-        $toCharset   = $this->config->getToCharset();
-        $fileMode    = $this->config->getFileMode();
+        $delimiter        = $this->config->getDelimiter();
+        $enclosure        = $this->config->getEnclosure();
+        $enclosure        = empty($enclosure) ? "\0" : $enclosure;
+        $newline          = $this->config->getNewline();
+        $fromCharset      = $this->config->getFromCharset();
+        $toCharset        = $this->config->getToCharset();
+        $fileMode         = $this->config->getFileMode();
+        $writeColumnNames = $this->config->getWriteColumnNames();
 
         try {
             $csv = new CsvFileObject($filename, $fileMode);
@@ -75,6 +76,12 @@ class Exporter implements ExporterInterface
 
         foreach ( $rows as $row ) {
             $this->checkRowConsistency($row);
+
+            if ($writeColumnNames) {
+                $csv->fputcsv(array_keys($row), $delimiter, $enclosure);
+                $writeColumnNames = false;
+            }
+
             $csv->fputcsv($row, $delimiter, $enclosure);
         }
         $csv->fflush();

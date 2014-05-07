@@ -50,6 +50,12 @@ class ExporterConfig
     private $fileMode = CsvFileObject::FILE_MODE_WRITE;
 
     /**
+     * Write column names in first line of csv
+     * @var bool
+     */
+    private $writeColumnNames = false;
+
+    /**
      * Set delimiter
      * @param string $delimiter
      * @return ExporterConfig
@@ -187,5 +193,25 @@ class ExporterConfig
     public function getFileMode()
     {
         return $this->fileMode;
+    }
+
+    /**
+     * Set option for writing column names
+     * @param bool $writeColumnNames
+     * @return ExporterConfig
+     */
+    public function setWriteColumnNames($writeColumnNames)
+    {
+        $this->writeColumnNames = $writeColumnNames;
+        return $this;
+    }
+
+    /**
+     * Return file mode
+     * @return string
+     */
+    public function getWriteColumnNames()
+    {
+        return $this->writeColumnNames;
     }
 }
