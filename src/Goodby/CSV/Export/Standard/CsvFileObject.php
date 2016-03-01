@@ -46,7 +46,7 @@ class CsvFileObject extends SplFileObject
      * @param string  $enclosure
      * @return int|void
      */
-    public function fputcsv($fields, $delimiter = null, $enclosure = null)
+    public function fputcsv($fields, $delimiter = null, $enclosure = null, $escape = null)
     {
         // Temporary output a line to memory to get line as string
         $fp = fopen('php://temp', 'w+');
